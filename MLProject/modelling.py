@@ -11,7 +11,7 @@ import mlflow.sklearn
 mlflow.set_experiment("Insurance Regression")
 
 # Load preprocessed dataset (PASTIKAN ADA DI FOLDER MLProject)
-df = pd.read_csv("insurance_preprocessing.csv")
+df = pd.read_csv("../insurance_preprocessing.csv")
 
 # Split features and target
 X = df.drop("charges", axis=1)
