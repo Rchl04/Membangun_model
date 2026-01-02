@@ -1,0 +1,7 @@
+# MLflow artifacts
+mlruns/
+mlflow.db
+
+# Python cache
+__pycache__/
+*.pyc

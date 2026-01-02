@@ -11,12 +11,6 @@ import mlflow.sklearn
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "insurance_preprocessing.csv")
 
-print("BASE DIR:", BASE_DIR)
-print("FILES IN DIR:", os.listdir(BASE_DIR))
-print("DATA PATH:", DATA_PATH)
-
-mlflow.set_experiment("Insurance Regression")
-
 df = pd.read_csv(DATA_PATH)
 
 X = df.drop("charges", axis=1)
@@ -32,17 +26,13 @@ models = {
 }
 
 for name, model in models.items():
-    with mlflow.start_run(run_name=name):
+    with mlflow.start_run(run_name=name, nested=True):
         model.fit(X_train, y_train)
         preds = model.predict(X_test)
 
-        mae = mean_absolute_error(y_test, preds)
-        rmse = np.sqrt(mean_squared_error(y_test, preds))
-        r2 = r2_score(y_test, preds)
-
         mlflow.log_param("model_type", name)
-        mlflow.log_metric("MAE", mae)
-        mlflow.log_metric("RMSE", rmse)
-        mlflow.log_metric("R2", r2)
+        mlflow.log_metric("MAE", mean_absolute_error(y_test, preds))
+        mlflow.log_metric("RMSE", np.sqrt(mean_squared_error(y_test, preds)))
+        mlflow.log_metric("R2", r2_score(y_test, preds))
 
         mlflow.sklearn.log_model(model, "model")
