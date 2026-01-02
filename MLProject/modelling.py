@@ -6,12 +6,11 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import mlflow
 import mlflow.sklearn
-import joblib
 
 # Set experiment name
 mlflow.set_experiment("Insurance Regression")
 
-# Load preprocessed dataset
+# Load preprocessed dataset (PASTIKAN ADA DI FOLDER MLProject)
 df = pd.read_csv("insurance_preprocessing.csv")
 
 # Split features and target
@@ -39,11 +38,9 @@ for name, model in models.items():
         rmse = np.sqrt(mean_squared_error(y_test, preds))
         r2 = r2_score(y_test, preds)
 
+        mlflow.log_param("model_type", name)
         mlflow.log_metric("MAE", mae)
         mlflow.log_metric("RMSE", rmse)
         mlflow.log_metric("R2", r2)
 
         mlflow.sklearn.log_model(model, "model")
-
-# Save best model
-joblib.dump(models["RandomForest"], "best_model.joblib")
