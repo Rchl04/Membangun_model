@@ -23,4 +23,5 @@ jobs:
 
       - name: Run MLflow Project
         run: |
-          mlflow run MLProject
+          mlflow run .
+        working-directory: MLProject
