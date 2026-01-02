@@ -23,5 +23,5 @@ jobs:
 
       - name: Run MLflow Project
         run: |
-          mlflow run .
+          python -m mlflow run . --env-manager=local
         working-directory: MLProject
