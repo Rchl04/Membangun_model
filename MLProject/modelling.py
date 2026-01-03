@@ -29,7 +29,6 @@ models = {
 }
 
 for name, model in models.items():
-    with mlflow.start_run(run_name=name):
         model.fit(X_train, y_train)
         preds = model.predict(X_test)
 
