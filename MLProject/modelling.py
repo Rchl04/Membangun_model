@@ -9,7 +9,7 @@ import mlflow
 import mlflow.sklearn
 
 mlflow.set_experiment("Insurance Regression")
-mlflow.autolog()
+mlflow.sklearn.autolog()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(BASE_DIR, "insurance_preprocessing.csv")
